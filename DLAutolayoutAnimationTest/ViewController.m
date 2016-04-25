@@ -49,7 +49,7 @@
     return UIStatusBarStyleDefault;
 }
 
-
+#pragma mark - 关键代码：动画设置
 - (void)setIsExpand:(BOOL)isExpand{
     [UIView animateWithDuration:0.25 delay:0.0 usingSpringWithDamping:0.4 initialSpringVelocity:10.0 options:UIViewAnimationOptionTransitionCurlUp animations:^{
         self.bottomCon.constant = isExpand?44.0f:0.0f;
@@ -66,7 +66,7 @@
 }
 
 
-
+#pragma mark - 关键代码：滚动方向判断
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView{
     int currentPostion = scrollView.contentOffset.y;
     if (currentPostion - _lastPosition > kScrollDistance  && currentPostion > 0) {        //这个地方加上 currentPostion > 0 即可）
