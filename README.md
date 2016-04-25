@@ -21,19 +21,21 @@
 
 
 #pragma mark - 关键代码：滚动方向判断
--(void)scrollViewDidScroll:(UIScrollView *)scrollView{
-    int currentPostion = scrollView.contentOffset.y;
-    if (currentPostion - _lastPosition > kScrollDistance  && currentPostion > 0) {        //这个地方加上 currentPostion > 0 即可）
-        NSLog(@"ScrollUp now");
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{
+    self.lastContentOffset = scrollView.contentOffset.y;
+}
+
+- (void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView{
+    if (self.lastContentOffset < scrollView.contentOffset.y) {
+        NSLog(@"向上滚动");
         if (self.isExpand) {
             self.isExpand = NO;
         }
-    }else if ((_lastPosition - currentPostion > kScrollDistance) && (currentPostion  <= scrollView.contentSize.height-scrollView.bounds.size.height-kScrollDistance) ){//这个地方加上后边那个即可，也不知道为什么，再减20才行   展现
-        NSLog(@"ScrollDown now");
+    }else{
+        NSLog(@"向下滚动");
         if (!self.isExpand) {
             self.isExpand = YES;
         }
     }
-    _lastPosition = currentPostion;
 }
 ~~~
